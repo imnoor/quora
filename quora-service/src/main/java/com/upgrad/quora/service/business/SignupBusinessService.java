@@ -13,6 +13,7 @@ public class SignupBusinessService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity signup(UserEntity userEntity) {
+
         return userAdminBusinessService.createUser(userEntity);
     }
 
