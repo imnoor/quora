@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Updated user controller RequestMapping and fill out the signup method.">
-      <change afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/exception/QuoraExceptionHandler.java" afterDir="false" />
+    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Updated user controller to set default user role as nonadmin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/SignupBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/SignupBusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,7 +421,7 @@
       <workItem from="1538642827225" duration="1059000" />
       <workItem from="1538723860955" duration="5425000" />
       <workItem from="1613498145794" duration="2666000" />
-      <workItem from="1613501058970" duration="4852000" />
+      <workItem from="1613501058970" duration="9267000" />
     </task>
     <task id="LOCAL-00001" summary="Adding User registration capabaliites, starting with services module">
       <created>1613503842221</created>
@@ -435,7 +437,21 @@
       <option name="project" value="LOCAL" />
       <updated>1613505339522</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Exception Handler for all exceptions">
+      <created>1613506012380</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613506012380</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated user controller to set default user role as nonadmin">
+      <created>1613506049944</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1613506049944</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -562,7 +578,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding User registration capabaliites, starting with services module" />
     <MESSAGE value="Updated user controller RequestMapping and fill out the signup method." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated user controller RequestMapping and fill out the signup method." />
+    <MESSAGE value="Added Exception Handler for all exceptions" />
+    <MESSAGE value="Updated user controller to set default user role as nonadmin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated user controller to set default user role as nonadmin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -28,4 +28,15 @@ public class UserAdminBusinessService {
         return userDao.createUser(userEntity);
 
     }
+
+    //check if username exists
+    public boolean userNameExists(final String userName) {
+        return userDao.getUserByUserName(userName) != null;
+    }
+
+    //check if email is already registered
+    public boolean emailExists(final String email) {
+        return userDao.getUserByEmail(email) != null;
+    }
+
 }
