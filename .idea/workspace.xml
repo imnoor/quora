@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Updated business logic for handling user registration exceptions">
+    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Updated the status reply message to meet requirements">
+      <change afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/AuthenticationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserAuthTokenEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -268,15 +272,13 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.QuoraApiApplication">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -417,7 +419,8 @@
       <workItem from="1538642827225" duration="1059000" />
       <workItem from="1538723860955" duration="5425000" />
       <workItem from="1613498145794" duration="2666000" />
-      <workItem from="1613501058970" duration="9900000" />
+      <workItem from="1613501058970" duration="10142000" />
+      <workItem from="1613574276983" duration="2542000" />
     </task>
     <task id="LOCAL-00001" summary="Adding User registration capabaliites, starting with services module">
       <created>1613503842221</created>
@@ -454,7 +457,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613511115176</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated the status reply message to meet requirements">
+      <created>1613511883479</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1613511883479</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -584,7 +594,8 @@
     <MESSAGE value="Added Exception Handler for all exceptions" />
     <MESSAGE value="Updated user controller to set default user role as nonadmin" />
     <MESSAGE value="Updated business logic for handling user registration exceptions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated business logic for handling user registration exceptions" />
+    <MESSAGE value="Updated the status reply message to meet requirements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated the status reply message to meet requirements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

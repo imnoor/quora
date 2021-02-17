@@ -1,7 +1,9 @@
 package com.upgrad.quora.service.business;
 
 import com.upgrad.quora.service.dao.UserDao;
+import com.upgrad.quora.service.entity.UserAuthTokenEntity;
 import com.upgrad.quora.service.entity.UserEntity;
+import com.upgrad.quora.service.exception.SignOutRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,6 +39,15 @@ public class UserAdminBusinessService {
     //check if email is already registered
     public boolean emailExists(final String email) {
         return userDao.getUserByEmail(email) != null;
+    }
+
+    // get the user by the access token
+    public UserEntity getUserByAccessToken(String token) throws SignOutRestrictedException {
+        UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
+        if (authEntity == null) {
+            throw new SignOutRestrictedException("SGR-001", "User is not Signed in");
+        }
+        return authEntity.getUser();
     }
 
 }
