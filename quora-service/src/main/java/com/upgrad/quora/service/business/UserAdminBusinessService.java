@@ -3,6 +3,7 @@ package com.upgrad.quora.service.business;
 import com.upgrad.quora.service.dao.UserDao;
 import com.upgrad.quora.service.entity.UserAuthTokenEntity;
 import com.upgrad.quora.service.entity.UserEntity;
+import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.SignOutRestrictedException;
 import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,26 +47,62 @@ public class UserAdminBusinessService {
 
     // get the user by the access token
     public UserEntity getUserByAccessToken(String token) throws SignOutRestrictedException {
-        UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
-        if (authEntity == null) {
-            throw new SignOutRestrictedException("SGR-001", "User is not Signed in");
-        }
+        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"SGR-001", "User is not Signed in" );
         return authEntity.getUser();
     }
 
-    public UserEntity getUser(String userUuid, String token) throws SignOutRestrictedException,UserNotFoundException {
+    private UserAuthTokenEntity pvtGetUserByAccessToken(String token, String errorCode, String errorMessage)  throws SignOutRestrictedException {
         UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
         if (authEntity == null) {
-            throw new SignOutRestrictedException("ATHR-001", "User has not signed in");
+            throw new SignOutRestrictedException(errorCode, errorMessage);
         }
-        ZonedDateTime logoutTime =  authEntity.getLogoutAt();
+        return authEntity;
+    }
+
+    private void pvtIsUserLoggedOut(ZonedDateTime logoutTime, String code, String message) throws SignOutRestrictedException {
         if (logoutTime == null || logoutTime.isBefore(ZonedDateTime.now())){
-            throw new SignOutRestrictedException("ATHR-002", "User is signed out.Sign in first to get user details");
+            throw new SignOutRestrictedException(code, message);
         }
+    }
+
+    private UserEntity pvtGetUserByUuid(String userUuid, String code, String message) throws UserNotFoundException {
         UserEntity userEntity = userDao.getUser(userUuid);
         if (userEntity == null) {
-            throw new UserNotFoundException("USR-001","User with entered uuid does not exist");
+            throw new UserNotFoundException(code,message);
         }
         return userEntity;
+    }
+
+    private void pvtIsUserAdmin(UserEntity userEntity, String code, String message) throws AuthorizationFailedException {
+        if (userEntity.getRole() =="nonadmin") {
+            throw new AuthorizationFailedException(code,message);
+        }
+    }
+
+    public UserEntity getUserProfile(String userUuid, String token) throws SignOutRestrictedException,UserNotFoundException {
+
+        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+
+        ZonedDateTime logoutTime =  authEntity.getLogoutAt();
+        this.pvtIsUserLoggedOut(logoutTime,"ATHR-002", "User is signed out.Sign in first to get user details");
+
+        UserEntity userEntity = this.pvtGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
+        return userEntity;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public String deleteUser(String userUuid, String token) throws SignOutRestrictedException, AuthorizationFailedException, UserNotFoundException {
+        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+
+        ZonedDateTime logoutTime =  authEntity.getLogoutAt();
+        this.pvtIsUserLoggedOut(logoutTime,"ATHR-002","User is signed out");
+
+        UserEntity userEntity = authEntity.getUser();
+
+        this.pvtIsUserAdmin(userEntity,"ATHR-003","Unauthorized Access, Entered user is not an admin");
+
+        UserEntity delUser = this.pvtGetUserByUuid(userUuid, "USR-001", "User with entered uuid to be deleted does not exist");
+
+        return userDao.deleteUser(delUser);
     }
 }

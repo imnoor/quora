@@ -62,4 +62,9 @@ public class UserDao {
         entityManager.merge(updatedUserEntity);
     }
 
+    public String deleteUser(UserEntity delUser) {
+        String uuid = delUser.getUuid();
+        entityManager.remove(delUser);
+        return uuid;
+    }
 }

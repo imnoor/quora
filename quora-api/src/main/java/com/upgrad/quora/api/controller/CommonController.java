@@ -22,7 +22,7 @@ public class CommonController {
     public ResponseEntity<UserDetailsResponse> getUser(@PathVariable("id") final String userUuid,
                                                        @RequestHeader("authorization") final String authorization) throws UserNotFoundException, SignOutRestrictedException {
         String [] bearerToken = authorization.split("Bearer ");
-        final UserEntity userEntity = userAdminBusinessService.getUser(userUuid, bearerToken[1]);
+        final UserEntity userEntity = userAdminBusinessService.getUserProfile(userUuid, bearerToken[1]);
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse().userName(userEntity.getUserName()).firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName()).emailAddress(userEntity.getEmail())
                 .contactNumber(userEntity.getContactNumber()).aboutMe(userEntity.getAboutMe()).country(userEntity.getCountry())
