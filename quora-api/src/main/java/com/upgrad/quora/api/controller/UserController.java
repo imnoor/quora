@@ -62,12 +62,25 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, path = "/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SigninResponse> login(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
 
-
-        byte[] decode = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
+        String [] authEncoded = authorization.split("Basic ");
+        String encoded = "";
+        if (authEncoded.length > 1) {
+            encoded = authEncoded[1];
+        }
+        byte[] decode = Base64.getDecoder().decode(encoded);
         String decodedText = new String(decode);
         String[] decodedArray = decodedText.split(":");
 
-        UserAuthTokenEntity userAuthToken = authenticationService.authenticate(decodedArray[0], decodedArray[1]);
+        //who knows may be it might not work when splitting invalid format token
+        String decodedPart1 ="rather peculiar username";
+        String decodedPart2 = "and a strange password";
+
+        if(decodedArray.length> 1) {
+            decodedPart1 = decodedArray[0];
+            decodedPart2 = decodedArray[1];
+        }
+
+        UserAuthTokenEntity userAuthToken = authenticationService.authenticate(decodedPart1,decodedPart2);
         UserEntity user = userAuthToken.getUser();
 
         SigninResponse authorizedUserResponse = new SigninResponse().id(user.getUuid());
@@ -79,8 +92,12 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, path = "/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignoutResponse> signout(@RequestHeader("authorization") final String authorization) throws SignOutRestrictedException {
-        String [] bearerToken = authorization.split("Bearer ");
-        final UserEntity userEntity = userAdminBusinessService.getUserByAccessToken(bearerToken[1]);
+
+        UserAuthTokenEntity authEntity = userAdminBusinessService.getUsersAccessToken(authorization);
+        if (authEntity == null ){
+            throw new SignOutRestrictedException("SGR-001", "User is not Signed in");
+        }
+        final UserEntity userEntity = authEntity.getUser();
 
         SignoutResponse signoutResponse = new SignoutResponse().id(userEntity.getUuid()).message("SIGNED OUT SUCCESSFULLY");
 
