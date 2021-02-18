@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 @Entity
-@Table(name = "user_auth", schema = "quora")
+@Table(name = "user_auth")
 @NamedQueries({
         @NamedQuery(name = "userAuthTokenByAccessToken", query = "select ut from UserAuthTokenEntity ut where ut.accessToken = :accessToken ")
 })
