@@ -45,27 +45,33 @@ public class UserAdminBusinessService {
         return userDao.getUserByEmail(email) != null;
     }
 
-    // get the user by the access token
-    public UserEntity getUserByAccessToken(String token) throws SignOutRestrictedException {
-        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"SGR-001", "User is not Signed in" );
-        return authEntity.getUser();
+    // get the access token from DB based on request access token
+    public UserAuthTokenEntity getUsersAccessToken(String token) {
+        UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
+        return authEntity;
     }
 
-    private UserAuthTokenEntity pvtGetUserByAccessToken(String token, String errorCode, String errorMessage)  throws SignOutRestrictedException {
+
+
+    // handle exception cases
+    private UserAuthTokenEntity pvtSafeGetUserByAccessToken(String token, String errorCode, String errorMessage)  throws AuthorizationFailedException {
         UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
         if (authEntity == null) {
-            throw new SignOutRestrictedException(errorCode, errorMessage);
+            //throw new SignOutRestrictedException(errorCode, errorMessage);
+            throw new AuthorizationFailedException(errorCode, errorMessage);
         }
         return authEntity;
     }
 
-    private void pvtIsUserLoggedOut(ZonedDateTime logoutTime, String code, String message) throws SignOutRestrictedException {
-        if (logoutTime == null || logoutTime.isBefore(ZonedDateTime.now())){
+    // handle exception cases
+    private void pvtSafeIsUserLoggedOut(ZonedDateTime logoutTime, String code, String message) throws SignOutRestrictedException {
+        if (logoutTime != null && logoutTime.isBefore(ZonedDateTime.now())){
             throw new SignOutRestrictedException(code, message);
         }
     }
 
-    private UserEntity pvtGetUserByUuid(String userUuid, String code, String message) throws UserNotFoundException {
+    // handle exception cases
+    private UserEntity pvtSafeGetUserByUuid(String userUuid, String code, String message) throws UserNotFoundException {
         UserEntity userEntity = userDao.getUser(userUuid);
         if (userEntity == null) {
             throw new UserNotFoundException(code,message);
@@ -73,35 +79,37 @@ public class UserAdminBusinessService {
         return userEntity;
     }
 
-    private void pvtIsUserAdmin(UserEntity userEntity, String code, String message) throws AuthorizationFailedException {
-        if (userEntity.getRole() =="nonadmin") {
+    // handle exception cases
+    private void pvtSafeIsUserAdmin(UserEntity userEntity, String code, String message) throws AuthorizationFailedException {
+        if (userEntity.getRole().equals("nonadmin")) {
             throw new AuthorizationFailedException(code,message);
         }
     }
 
-    public UserEntity getUserProfile(String userUuid, String token) throws SignOutRestrictedException,UserNotFoundException {
+    public UserEntity getUserProfile(String userUuid, String token) throws SignOutRestrictedException,UserNotFoundException, AuthorizationFailedException {
 
-        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+        UserEntity userEntity = this.pvtSafeGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
+
+        UserAuthTokenEntity authEntity =  this.pvtSafeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
 
         ZonedDateTime logoutTime =  authEntity.getLogoutAt();
-        this.pvtIsUserLoggedOut(logoutTime,"ATHR-002", "User is signed out.Sign in first to get user details");
+        this.pvtSafeIsUserLoggedOut(logoutTime,"ATHR-002", "User is signed out.Sign in first to get user details");
 
-        UserEntity userEntity = this.pvtGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
         return userEntity;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public String deleteUser(String userUuid, String token) throws SignOutRestrictedException, AuthorizationFailedException, UserNotFoundException {
-        UserAuthTokenEntity authEntity =  this.pvtGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+        UserAuthTokenEntity authEntity =  this.pvtSafeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
 
         ZonedDateTime logoutTime =  authEntity.getLogoutAt();
-        this.pvtIsUserLoggedOut(logoutTime,"ATHR-002","User is signed out");
+        this.pvtSafeIsUserLoggedOut(logoutTime,"ATHR-002","User is signed out");
 
         UserEntity userEntity = authEntity.getUser();
 
-        this.pvtIsUserAdmin(userEntity,"ATHR-003","Unauthorized Access, Entered user is not an admin");
+        this.pvtSafeIsUserAdmin(userEntity,"ATHR-003","Unauthorized Access, Entered user is not an admin");
 
-        UserEntity delUser = this.pvtGetUserByUuid(userUuid, "USR-001", "User with entered uuid to be deleted does not exist");
+        UserEntity delUser = this.pvtSafeGetUserByUuid(userUuid, "USR-001", "User with entered uuid to be deleted does not exist");
 
         return userDao.deleteUser(delUser);
     }
