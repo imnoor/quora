@@ -1,5 +1,7 @@
 package com.upgrad.quora.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -36,6 +38,14 @@ public class SignOutRestrictedException extends Exception {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    // To send the right HTTP Code based on the error code and the Exception Classs
+    public HttpStatus getHttpCode() {
+        switch(code) {
+            case "SGR-001" : return HttpStatus.UNAUTHORIZED;
+        }
+        return HttpStatus.NOT_FOUND;
     }
 
 }
