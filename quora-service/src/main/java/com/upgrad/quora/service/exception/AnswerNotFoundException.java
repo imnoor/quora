@@ -1,5 +1,7 @@
 package com.upgrad.quora.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -36,6 +38,11 @@ public class AnswerNotFoundException extends Exception {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    // To send the right HTTP Code based on the error code and the Exception Classs
+    public HttpStatus getHttpCode() {
+        return HttpStatus.NOT_FOUND;
     }
 
 }

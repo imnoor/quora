@@ -1,5 +1,7 @@
 package com.upgrad.quora.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -38,5 +40,13 @@ public class SignUpRestrictedException extends Exception {
         return errorMessage;
     }
 
+    // To send the right HTTP Code based on the error code and the Exception Classs
+    public HttpStatus getHttpCode() {
+        switch(code) {
+            case "SGR-001" : return HttpStatus.CONFLICT;
+            case "SGR-002" : return HttpStatus.CONFLICT;
+        }
+        return HttpStatus.NOT_FOUND;
+    }
 }
 
