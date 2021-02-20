@@ -113,4 +113,10 @@ public class UserAdminBusinessService {
 
         return userDao.deleteUser(delUser);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void signoutUser(UserAuthTokenEntity token){
+        token.setLogoutAt(ZonedDateTime.now());
+        userDao.updateSignout(token);
+    }
 }

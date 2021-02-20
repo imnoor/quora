@@ -4,27 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Added @OnDelete(action = OnDeleteAction.CASCADE) to remove Access Tokens when user is removed.">
+    <list default="true" id="47a15d9d-c79e-46a9-bbbf-df38ac55657d" name="Default Changelist" comment="Test cases successfully completed.">
+      <change afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/QuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/QuestionBusinessService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/QuestionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/QuestionEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/CommonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/CommonController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/exception/QuoraExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/exception/QuoraExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/AdminControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/AdminControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/CommonControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/CommonControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-api/src/test/java/com/upgrad/quora/api/controller/UserControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserAuthTokenEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserAuthTokenEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AnswerNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AnswerNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthenticationFailedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthenticationFailedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthorizationFailedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthorizationFailedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/InvalidQuestionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/InvalidQuestionException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/SignOutRestrictedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/SignOutRestrictedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/SignUpRestrictedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/SignUpRestrictedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/UserNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/exception/UserNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,6 +267,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.6643678" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -367,7 +357,10 @@
       <workItem from="1613498145794" duration="2666000" />
       <workItem from="1613501058970" duration="10142000" />
       <workItem from="1613574276983" duration="6160000" />
-      <workItem from="1613665698102" duration="14830000" />
+      <workItem from="1613665698102" duration="15701000" />
+      <workItem from="1613817855114" duration="167000" />
+      <workItem from="1613818358438" duration="1758000" />
+      <workItem from="1613833773971" duration="4618000" />
     </task>
     <task id="LOCAL-00001" summary="Adding User registration capabaliites, starting with services module">
       <created>1613503842221</created>
@@ -439,7 +432,70 @@
       <option name="project" value="LOCAL" />
       <updated>1613666663418</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Exception handler updated to provide accurate HTTP response codes based on error.">
+      <created>1613681172121</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681172121</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Corrected admin controller path variable error">
+      <created>1613681212602</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681212602</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added Auth Token UUID to fix save error for auth token">
+      <created>1613681252306</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681252306</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fixed pathvariable name, and fixed the request header authorization variable based on the request produced by swagger UI and Test cases.">
+      <created>1613681385974</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681385974</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Renamed pvt functions to reflect their purpose">
+      <created>1613681453382</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681453382</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Removed schema name and updated with @OnDelete to cascade delete of access tokens.">
+      <created>1613681532118</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681532118</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fixed authorization tokens to reflect the swagger ui and test cases request format.">
+      <created>1613681602945</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681602945</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Removed table schema name">
+      <created>1613681638191</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681638191</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Test cases successfully completed.">
+      <created>1613681663767</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1613681663767</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -574,7 +630,16 @@
     <MESSAGE value="Added code for retrieving user profile" />
     <MESSAGE value="Delete user code updated, pending delete the records from all the tables related to that user" />
     <MESSAGE value="Added @OnDelete(action = OnDeleteAction.CASCADE) to remove Access Tokens when user is removed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added @OnDelete(action = OnDeleteAction.CASCADE) to remove Access Tokens when user is removed." />
+    <MESSAGE value="Exception handler updated to provide accurate HTTP response codes based on error." />
+    <MESSAGE value="Corrected admin controller path variable error" />
+    <MESSAGE value="Added Auth Token UUID to fix save error for auth token" />
+    <MESSAGE value="Fixed pathvariable name, and fixed the request header authorization variable based on the request produced by swagger UI and Test cases." />
+    <MESSAGE value="Renamed pvt functions to reflect their purpose" />
+    <MESSAGE value="Removed schema name and updated with @OnDelete to cascade delete of access tokens." />
+    <MESSAGE value="Fixed authorization tokens to reflect the swagger ui and test cases request format." />
+    <MESSAGE value="Removed table schema name" />
+    <MESSAGE value="Test cases successfully completed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Test cases successfully completed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -596,28 +661,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java</url>
-          <line>104</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java</url>
           <line>74</line>
           <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/AdminController.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminBusinessService.java</url>
-          <line>83</line>
-          <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java</url>
