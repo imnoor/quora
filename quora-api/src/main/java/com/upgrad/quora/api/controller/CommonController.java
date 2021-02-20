@@ -20,7 +20,7 @@ public class CommonController {
     private UserAdminBusinessService userAdminBusinessService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/userprofile/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UserDetailsResponse> getUser(@PathVariable("userId") final String userUuid,
+    public ResponseEntity<UserDetailsResponse> userProfile(@PathVariable("userId") final String userUuid,
                                                        @RequestHeader("authorization") final String authorization) throws UserNotFoundException, SignOutRestrictedException, AuthorizationFailedException {
 
         final UserEntity userEntity = userAdminBusinessService.getUserProfile(userUuid, authorization);
