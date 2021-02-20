@@ -67,4 +67,8 @@ public class UserDao {
         entityManager.remove(delUser);
         return uuid;
     }
+
+    public void updateSignout(UserAuthTokenEntity token) {
+        entityManager.merge(token);
+    }
 }
