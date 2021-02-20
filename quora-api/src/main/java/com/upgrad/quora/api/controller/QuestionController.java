@@ -1,5 +1,6 @@
 package com.upgrad.quora.api.controller;
 
+import com.upgrad.quora.api.model.QuestionDetailsResponse;
 import com.upgrad.quora.api.model.QuestionRequest;
 import com.upgrad.quora.api.model.QuestionResponse;
 import com.upgrad.quora.service.business.QuestionBusinessService;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,18 +38,30 @@ public class QuestionController {
 
         final QuestionEntity questionEntity = new QuestionEntity();
 
-        UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.safeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
-        userAdminBusinessService.safeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post a question" );
+        UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.isAuthorizedToQuestion(authorization);
 
         questionEntity.setUuid(UUID.randomUUID().toString());
         questionEntity.setContent(questionEntity.getContent());
         questionEntity.setUser(userAuthTokenEntity.getUser());
         questionEntity.setDate(ZonedDateTime.now());
         final String uuid  = questionBusinessService.createQuestion(questionEntity);
-        QuestionResponse userResponse = new QuestionResponse().id(uuid).status("QUESTION CREATED");
-        return new ResponseEntity<QuestionResponse>(userResponse, HttpStatus.CREATED);
+        QuestionResponse questionResponse = new QuestionResponse().id(uuid).status("QUESTION CREATED");
+        return new ResponseEntity<QuestionResponse>(questionResponse, HttpStatus.CREATED);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/all", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions (@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.isAuthorizedToQuestion(authorization);
+
+        List<QuestionEntity> questionEntityList = questionBusinessService.getAllQuestions();
+        List<QuestionDetailsResponse> responses = new ArrayList<>();
+        for ( QuestionEntity qe : questionEntityList){
+            QuestionDetailsResponse questionDetailsResponse = new QuestionDetailsResponse().id(qe.getUuid()).content(qe.getContent());
+            responses.add(questionDetailsResponse);
+        }
+        return new ResponseEntity<List<QuestionDetailsResponse>>(responses, HttpStatus.OK);
+    }
 
 
 }

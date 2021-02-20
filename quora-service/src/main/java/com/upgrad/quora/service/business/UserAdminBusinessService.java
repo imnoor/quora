@@ -54,7 +54,7 @@ public class UserAdminBusinessService {
 
 
     // handle exception cases
-    public UserAuthTokenEntity safeGetUserByAccessToken(String token, String errorCode, String errorMessage)  throws AuthorizationFailedException {
+    private UserAuthTokenEntity pvtSafeGetUserByAccessToken(String token, String errorCode, String errorMessage)  throws AuthorizationFailedException {
         UserAuthTokenEntity authEntity =  userDao.getUserAuthToken(token);
         if (authEntity == null) {
             //throw new SignOutRestrictedException(errorCode, errorMessage);
@@ -71,7 +71,7 @@ public class UserAdminBusinessService {
     }
 
     //handle exception case
-    public void safeIsUserSignedIn(UserAuthTokenEntity userAuthTokenEntity, String code, String message) throws AuthorizationFailedException {
+    private void pvtSafeIsUserSignedIn(UserAuthTokenEntity userAuthTokenEntity, String code, String message) throws AuthorizationFailedException {
         ZonedDateTime logoutTime = userAuthTokenEntity.getLogoutAt();
         if (logoutTime != null && logoutTime.isBefore(ZonedDateTime.now())){
             throw new AuthorizationFailedException(code, message);
@@ -98,7 +98,7 @@ public class UserAdminBusinessService {
 
         UserEntity userEntity = this.pvtSafeGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
 
-        UserAuthTokenEntity authEntity =  this.safeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+        UserAuthTokenEntity authEntity =  this.pvtSafeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
 
         ZonedDateTime logoutTime =  authEntity.getLogoutAt();
         this.safeIsUserLoggedOut(logoutTime,"ATHR-002", "User is signed out.Sign in first to get user details");
@@ -108,7 +108,7 @@ public class UserAdminBusinessService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public String deleteUser(String userUuid, String token) throws SignOutRestrictedException, AuthorizationFailedException, UserNotFoundException {
-        UserAuthTokenEntity authEntity =  this.safeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
+        UserAuthTokenEntity authEntity =  this.pvtSafeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
 
         ZonedDateTime logoutTime =  authEntity.getLogoutAt();
         this.safeIsUserLoggedOut(logoutTime,"ATHR-002","User is signed out");
@@ -128,5 +128,10 @@ public class UserAdminBusinessService {
         userDao.updateSignout(token);
     }
 
+    public UserAuthTokenEntity isAuthorizedToQuestion(String authorization) throws AuthorizationFailedException {
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post a question" );
+        return userAuthTokenEntity;
+    }
 
 }
