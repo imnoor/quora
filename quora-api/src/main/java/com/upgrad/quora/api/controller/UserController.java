@@ -98,7 +98,7 @@ public class UserController {
             throw new SignOutRestrictedException("SGR-001", "User is not Signed in");
         }
         final UserEntity userEntity = authEntity.getUser();
-        userAdminBusinessService.signoutUser(authEntity);
+
         SignoutResponse signoutResponse = new SignoutResponse().id(userEntity.getUuid()).message("SIGNED OUT SUCCESSFULLY");
 
         return new ResponseEntity<SignoutResponse>(signoutResponse, HttpStatus.OK);
