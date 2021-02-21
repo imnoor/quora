@@ -13,11 +13,12 @@ import java.time.ZonedDateTime;
 @NamedQueries(
         {
                 @NamedQuery(name = "questionsByUser", query = "select q from QuestionEntity q where q.user = :id"),
-                @NamedQuery(name = "questionById", query = "select q from QuestionEntity q where q.uuid =:id")
+                @NamedQuery(name = "questionById", query = "select q from QuestionEntity q where q.uuid =:id"),
+                @NamedQuery(name = "findAll", query = "select q from QuestionEntity q")
         }
 )
 public class QuestionEntity {
-    public static final String FIND_ALL = "Publication.findAll";
+    public static final String FIND_ALL = "findAll";
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

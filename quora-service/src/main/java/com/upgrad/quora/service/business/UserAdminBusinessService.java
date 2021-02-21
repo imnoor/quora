@@ -79,7 +79,7 @@ public class UserAdminBusinessService {
     }
 
     // handle exception cases
-    private UserEntity pvtSafeGetUserByUuid(String userUuid, String code, String message) throws UserNotFoundException {
+    public UserEntity safeGetUserByUuid(String userUuid, String code, String message) throws UserNotFoundException {
         UserEntity userEntity = userDao.getUser(userUuid);
         if (userEntity == null) {
             throw new UserNotFoundException(code,message);
@@ -96,7 +96,7 @@ public class UserAdminBusinessService {
 
     public UserEntity getUserProfile(String userUuid, String token) throws SignOutRestrictedException,UserNotFoundException, AuthorizationFailedException {
 
-        UserEntity userEntity = this.pvtSafeGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
+        UserEntity userEntity = this.safeGetUserByUuid(userUuid,"USR-001","User with entered uuid does not exist" );
 
         UserAuthTokenEntity authEntity =  this.pvtSafeGetUserByAccessToken(token,"ATHR-001", "User has not signed in" );
 
@@ -117,21 +117,65 @@ public class UserAdminBusinessService {
 
         this.pvtSafeIsUserAdmin(userEntity,"ATHR-003","Unauthorized Access, Entered user is not an admin");
 
-        UserEntity delUser = this.pvtSafeGetUserByUuid(userUuid, "USR-001", "User with entered uuid to be deleted does not exist");
+        UserEntity delUser = this.safeGetUserByUuid(userUuid, "USR-001", "User with entered uuid to be deleted does not exist");
 
         return userDao.deleteUser(delUser);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void signoutUser(UserAuthTokenEntity token){
+
         token.setLogoutAt(ZonedDateTime.now());
         userDao.updateSignout(token);
+
     }
 
-    public UserAuthTokenEntity isAuthorizedToQuestion(String authorization) throws AuthorizationFailedException {
+    public UserAuthTokenEntity isAuthorizedToPostQuestion(String authorization) throws AuthorizationFailedException {
+
         UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
         this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post a question" );
         return userAuthTokenEntity;
+
+    }
+    public UserAuthTokenEntity isAuthorizedToGetAllQuestion(String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to get all questions" );
+        return userAuthTokenEntity;
+
     }
 
+    public UserAuthTokenEntity isAuthorizedToEditQuestion(String authorization, String userUuid) throws AuthorizationFailedException{
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
+
+        if ( !userAuthTokenEntity.getUser().getUuid().equals(userUuid) ){
+            throw new AuthorizationFailedException("ATHR-003", "Only the question owner can edit the question");
+        }
+
+        return userAuthTokenEntity;
+    }
+
+    public UserAuthTokenEntity isAuthorizedToDeleteQuestion(String authorization, UserEntity user)  throws AuthorizationFailedException {
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
+
+        if (user.getRole().equals("nonadmin")) {
+            if (!userAuthTokenEntity.getUser().getUuid().equals(user.getUuid())) {
+                throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
+            }
+        }
+
+        return userAuthTokenEntity;
+
+    }
+
+    public UserAuthTokenEntity isAuthorizedToGetAllUserQuestion(String authorization) throws AuthorizationFailedException {
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to get all questions posted by a specific user" );
+        return userAuthTokenEntity;
+    }
 }
