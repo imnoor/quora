@@ -45,4 +45,11 @@ public class QuestionDao {
         }
     }
 
+    public QuestionEntity getQuestionByUuid(String questionId) {
+        try {
+            return entityManager.createNamedQuery("questionById", QuestionEntity.class).setParameter("id", questionId).getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }

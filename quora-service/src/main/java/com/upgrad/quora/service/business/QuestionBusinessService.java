@@ -42,4 +42,8 @@ public class QuestionBusinessService {
         return questionDao.getAllQuestionsByUser(userEntity);
     }
 
+    public QuestionEntity getQuestion(String questionId) {
+        return questionDao.getQuestionByUuid(questionId);
+    }
+
 }
