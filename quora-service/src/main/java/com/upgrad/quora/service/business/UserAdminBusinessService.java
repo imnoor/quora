@@ -149,17 +149,19 @@ public class UserAdminBusinessService {
 
         UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
 
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
+
         if ( !userAuthTokenEntity.getUser().getUuid().equals(userUuid) ){
             throw new AuthorizationFailedException("ATHR-003", "Only the question owner can edit the question");
         }
 
-        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
         return userAuthTokenEntity;
-
     }
 
     public UserAuthTokenEntity isAuthorizedToDeleteQuestion(String authorization, UserEntity user)  throws AuthorizationFailedException {
         UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
 
         if (user.getRole().equals("nonadmin")) {
             if (!userAuthTokenEntity.getUser().getUuid().equals(user.getUuid())) {
@@ -167,7 +169,6 @@ public class UserAdminBusinessService {
             }
         }
 
-        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to edit the question" );
         return userAuthTokenEntity;
 
     }

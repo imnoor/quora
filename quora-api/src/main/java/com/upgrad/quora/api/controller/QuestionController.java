@@ -47,7 +47,7 @@ public class QuestionController {
         return new ResponseEntity<QuestionResponse>(questionResponse, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/all", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
         UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.isAuthorizedToGetAllQuestion(authorization);
@@ -81,7 +81,7 @@ public class QuestionController {
         return new ResponseEntity<QuestionEditResponse>(questionResponse, HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/delete/{questionId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, path = "/delete/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionDeleteResponse> deleteQuestion(@PathVariable("questionId") final String questionId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, InvalidQuestionException {
 
         final QuestionEntity questionEntity= questionBusinessService.getQuestion(questionId);
@@ -96,10 +96,10 @@ public class QuestionController {
         return new ResponseEntity<QuestionDeleteResponse>(questionResponse, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/all/{userId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/all/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestionsByUser(@PathVariable("userId") final String userId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, InvalidQuestionException, UserNotFoundException {
 
-        UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.isAuthorizedToGetAllUserQuestion(authorization);
+        userAdminBusinessService.isAuthorizedToGetAllUserQuestion(authorization);
 
         UserEntity userEntity = userAdminBusinessService.safeGetUserByUuid(userId,"USR-001","User with entered uuid whose question details are to be seen does not exist" );
 
