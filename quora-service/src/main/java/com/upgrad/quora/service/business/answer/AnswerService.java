@@ -6,6 +6,8 @@ import com.upgrad.quora.service.entity.AnswerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AnswerService {
     
@@ -16,18 +18,18 @@ public class AnswerService {
         answerDao.createAnswer(answerEntity);
     }
 
-    public void editAnAnswerService(Integer answerId, String newAnswer) {
+    public String editAnAnswerService(String answerId, String newAnswer) {
         AnswerEntity exAnswerEntity = answerDao.getAnswer(answerId);
         exAnswerEntity.setAns(newAnswer);
-        answerDao.updateAnswer(exAnswerEntity);
+        return answerDao.updateAnswer(exAnswerEntity);
     }
 
-    public void deleteAnswerService(Integer answerId) {
+    public String deleteAnswerService(String answerId) {
         AnswerEntity exAnswerEntity = answerDao.getAnswer(answerId);
-        answerDao.deleteAnswer(exAnswerEntity);
+        return answerDao.deleteAnswer(exAnswerEntity);
     }
 
-    public void getAllAnswersForAQuestionService(Integer questionId) {
-        answerDao.getAllAnswers(questionId);
+    public List<AnswerEntity> getAllAnswersForAQuestionService(Integer questionId) {
+        return answerDao.getAllAnswers(questionId);
     }
 }

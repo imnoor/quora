@@ -1,14 +1,11 @@
 package com.upgrad.quora.service.dao;
 
+import com.upgrad.quora.service.entity.AnswerEntity;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import com.upgrad.quora.service.entity.AnswerEntity;
-
-import com.upgrad.quora.service.entity.QuestionEntity;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -21,23 +18,24 @@ public class AnswerDao {
         return answerEntity;
     }
 
-    public AnswerEntity getAnswer(final Integer id) {
+    public AnswerEntity getAnswer(final String uuid) {
         try {
-            return entityManager.createNamedQuery("id", AnswerEntity.class).setParameter("id", id)
+            return entityManager.createNamedQuery("answerById", AnswerEntity.class).setParameter("id", uuid)
                     .getSingleResult();
         } catch (NoResultException nre) {
             return null;
         }
     }
 
-    public void updateAnswer(final AnswerEntity updatedAnswerEntity) {
+    public String updateAnswer(final AnswerEntity updatedAnswerEntity) {
         entityManager.merge(updatedAnswerEntity);
+        return updatedAnswerEntity.getUuid();
     }
 
-    public Integer deleteAnswer(AnswerEntity delAnswer) {
-        Integer id = delAnswer.getId();
+    public String deleteAnswer(AnswerEntity delAnswer) {
+        String uuid = delAnswer.getUuid();
         entityManager.remove(delAnswer);
-        return id;
+        return uuid;
     }
 
     public List<AnswerEntity> getAllAnswers(Integer questionId) {

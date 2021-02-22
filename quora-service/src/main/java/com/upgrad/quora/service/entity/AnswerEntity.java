@@ -11,7 +11,8 @@ import java.time.ZonedDateTime;
 @Table(name = "answer")
 @NamedQueries(
         {
-                @NamedQuery(name = "answerByQuestion", query = "select o from AnswerEntity o where o.question_id=:question_id")
+                @NamedQuery(name = "answerByQuestion", query = "select o from AnswerEntity o where o.question_id.id=:question_id"),
+                @NamedQuery(name = "answerById", query = "select q from AnswerEntity q where q.uuid =:id")
         }
 )
 public class AnswerEntity implements Serializable {
@@ -37,8 +38,10 @@ public class AnswerEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity user;
 
-    @Column(name = "QUESTION_ID")
-    private Integer question_id;
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private QuestionEntity question_id;
 
     public Integer getId() {
         return id;
@@ -72,11 +75,11 @@ public class AnswerEntity implements Serializable {
         this.user = user;
     }
 
-    public Integer getQuestion_id() {
+    public QuestionEntity getQuestion_id() {
         return question_id;
     }
 
-    public void setQuestion_id(Integer question_id) {
+    public void setQuestion_id(QuestionEntity question_id) {
         this.question_id = question_id;
     }
 
