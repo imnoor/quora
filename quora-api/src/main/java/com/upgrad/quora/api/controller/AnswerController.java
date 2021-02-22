@@ -54,7 +54,7 @@ public class AnswerController {
         return new ResponseEntity<AnswerEditResponse>(answerResponse, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "/answer/delete/{answerId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerDeleteResponse> deleteAnAnswer(@PathVariable("answerId") String answerId) {
         String uuid = answerService.deleteAnswerService(answerId);
         AnswerDeleteResponse answerDeleteResponse = new AnswerDeleteResponse().id(uuid).status("ANSWER DELETED");
@@ -62,7 +62,7 @@ public class AnswerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/answer/all/{questionId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AnswerDetailsResponse> getAllAnswersForAQuestion(@PathVariable("questionId") String questionId) {
+    public ResponseEntity<List<AnswerDetailsResponse>> getAllAnswersForAQuestion(@PathVariable("questionId") String questionId) {
         //send the string to service and replace the data in db
 
         List<AnswerEntity> answerEntities = answerService.getAllAnswersForAQuestionService(questionId);
@@ -74,8 +74,6 @@ public class AnswerController {
                     .answerContent(ae.getAns());
             responses.add(answerDetailsResponse);
         }
-        //return new ResponseEntity<List<AnswerDetailsResponse>>(responses, HttpStatus.OK);
-        return null; //dummy
+        return new ResponseEntity<List<AnswerDetailsResponse>>(responses, HttpStatus.OK);
     }
-
 }
