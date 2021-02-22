@@ -178,4 +178,12 @@ public class UserAdminBusinessService {
         this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to get all questions posted by a specific user" );
         return userAuthTokenEntity;
     }
+
+    public UserAuthTokenEntity isAuthorizedToPostAnswer(String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post an answer" );
+        return userAuthTokenEntity;
+
+    }
 }
