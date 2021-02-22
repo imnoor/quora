@@ -32,4 +32,8 @@ public class AnswerService {
     public List<AnswerEntity> getAllAnswersForAQuestionService(String questionId) {
         return answerDao.getAllAnswers(questionId);
     }
+
+    public AnswerEntity getAnswerByUuid(String uuid) {
+        return answerDao.getAnswer(uuid);
+    }
 }

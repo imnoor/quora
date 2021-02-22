@@ -186,4 +186,28 @@ public class UserAdminBusinessService {
         return userAuthTokenEntity;
 
     }
+
+    public UserAuthTokenEntity isAuthorizedToDeleteAnswer(String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post an answer" );
+        return userAuthTokenEntity;
+
+    }
+
+    public UserAuthTokenEntity isAuthorizedToEditAnswer(String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post an answer" );
+        return userAuthTokenEntity;
+
+    }
+
+    public UserAuthTokenEntity isAuthorizedToGetAllAnswersForAQuestion(String authorization) throws AuthorizationFailedException {
+
+        UserAuthTokenEntity userAuthTokenEntity = this.pvtSafeGetUserByAccessToken(authorization, "ATHR-001", "User has not signed in");
+        this.pvtSafeIsUserSignedIn(userAuthTokenEntity,"ATHR-002","User is signed out.Sign in first to post an answer" );
+        return userAuthTokenEntity;
+
+    }
 }
