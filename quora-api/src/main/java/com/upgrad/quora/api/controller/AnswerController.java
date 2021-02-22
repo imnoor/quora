@@ -31,15 +31,15 @@ public class AnswerController {
     QuestionBusinessService questionBusinessService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/question/{questionId}/answer/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AnswerResponse> addAnswerToAQuestion(final AnswerRequest answerRequest, @PathVariable("questionId") Integer questionId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+    public ResponseEntity<AnswerResponse> addAnswerToAQuestion(final AnswerRequest answerRequest, @PathVariable("questionId") String questionId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
 
         AnswerEntity answerEntity = new AnswerEntity();
 
         UserAuthTokenEntity userAuthTokenEntity = userAdminBusinessService.isAuthorizedToPostAnswer(authorization);
-
+        QuestionEntity questionEntity = questionBusinessService.getQuestion(questionId);
         answerEntity.setAns(answerRequest.getAnswer());
         answerEntity.setDate(ZonedDateTime.now());
-        answerEntity.setQuestion_id(questionId);
+        answerEntity.setQuestion_id(questionEntity);
         answerEntity.setUser(userAuthTokenEntity.getUser());
         answerEntity.setUuid(UUID.randomUUID().toString());
         answerService.addAnswerToAQuestionService(answerEntity);
@@ -62,11 +62,11 @@ public class AnswerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/answer/all/{questionId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AnswerDetailsResponse> getAllAnswersForAQuestion(@PathVariable("questionId") Integer questionId) {
+    public ResponseEntity<AnswerDetailsResponse> getAllAnswersForAQuestion(@PathVariable("questionId") String questionId) {
         //send the string to service and replace the data in db
 
         List<AnswerEntity> answerEntities = answerService.getAllAnswersForAQuestionService(questionId);
-        QuestionEntity questionEntity = questionBusinessService.getQuestion(questionId.toString());
+        QuestionEntity questionEntity = questionBusinessService.getQuestion(questionId);
         List<AnswerDetailsResponse> responses = new ArrayList<>();
         for ( AnswerEntity ae : answerEntities){
             AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse().id(ae.getUuid())

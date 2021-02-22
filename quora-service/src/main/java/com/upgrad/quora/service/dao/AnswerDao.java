@@ -38,7 +38,7 @@ public class AnswerDao {
         return uuid;
     }
 
-    public List<AnswerEntity> getAllAnswers(Integer questionId) {
+    public List<AnswerEntity> getAllAnswers(String questionId) {
         return entityManager.createNamedQuery("answerByQuestion", AnswerEntity.class).setParameter("question_id", questionId).getResultList();
     }
 }

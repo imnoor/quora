@@ -29,7 +29,7 @@ public class AnswerService {
         return answerDao.deleteAnswer(exAnswerEntity);
     }
 
-    public List<AnswerEntity> getAllAnswersForAQuestionService(Integer questionId) {
+    public List<AnswerEntity> getAllAnswersForAQuestionService(String questionId) {
         return answerDao.getAllAnswers(questionId);
     }
 }
