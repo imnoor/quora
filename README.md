@@ -5,7 +5,7 @@ The question answer website project
 # Working with the Project
 
 ## Checking out a branch
-'''
+```
 >mkdir quora
 >cd quora
 >>git init
@@ -13,7 +13,7 @@ The question answer website project
 >git remote add origin https://github.com/imnoor/quora.git
 >git fetch
 >git checkout questions ( assuming questions is the name of the branch you would be working on)
-'''
+```
 
 ## Fixing Issues with generated code on intelliJ
 
